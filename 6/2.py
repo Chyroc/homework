@@ -1,21 +1,19 @@
-def longest_string(s):
-    max_sub = ''
-    for i in range(len(s)):
-        for j in range(i, len(s)):
-            lonest_s = set()
-            sub = ''
-            for k in range(i, j):
-                if s[k] in lonest_s:
-                    if len(sub) > len(max_sub):
-                        max_sub = sub
-                    break
-                else:
-                    sub += s[k]
-                    lonest_s.add(s[k])
-
-    return max_sub
+def substrfun(s):
+    index = 1
+    smax = ''
+    ssub = s[0]
+    while index < len(s) - 1:
+        while index < len(s) - 1 and s[index - 1] <= s[index]:
+            ssub += s[index]
+            index += 1
+        else:
+            if len(ssub) > len(smax):
+                (ssub, smax) = (smax, ssub)
+            ssub = s[index]
+        index += 1
+    return smax
 
 
 if __name__ == '__main__':
-    print(longest_string('abcbcd'))
-    print(longest_string('bbbb'))
+    print(substrfun('abcbcd') == 'abc')
+    print(substrfun('azcbobobegghakl') == 'beggh')
