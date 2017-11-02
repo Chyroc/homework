@@ -3,7 +3,6 @@
 
 import random
 import string
-from termcolor import colored
 
 WORDLIST_FILENAME = "words.txt"
 
@@ -16,11 +15,11 @@ def loadWords():
     Depending on the size of the word list, this function may
     take a while to finish.
     """
-    print(colored('加载单词文件...', 'yellow'))
+    print('加载单词文件...')
     with open(WORDLIST_FILENAME, 'r', -1) as inFile:
         line = inFile.readline()
         wordlist = line.split()
-    print(colored('    {}个单词加载了'.format(len(wordlist)), 'green'))
+    print('    {}个单词加载了'.format(len(wordlist)))
     return wordlist
 
 
@@ -87,15 +86,15 @@ def getAvailableLetters(lettersGuessed):
 
 def checkSingleLetter(singleLetter):
     if not isinstance(singleLetter, str):
-        print(colored('不是字符串：{}'.format(singleLetter), 'red'))
+        print('不是字符串：{}'.format(singleLetter))
         return
 
     if len([i for i in singleLetter]) != 1:
-        print(colored('是多字母而非单字母：{}'.format(singleLetter), 'red'))
+        print('是多字母而非单字母：{}'.format(singleLetter))
         return
 
     if not singleLetter.isalpha():
-        print(colored('非字母：{}'.format(singleLetter), 'red'))
+        print('非字母：{}'.format(singleLetter))
         return
 
     return singleLetter.lower()
@@ -125,38 +124,38 @@ def hangman(secretWord):
     guesses_left = 8
     lettersGuessed = []
 
-    print(colored('欢迎来到 Hangman 游戏!', 'green'))
-    print(colored('你要猜的单词长度是：{}'.format(len(secretWord)), 'green'))
+    print(secretWord)
+    print('欢迎来到 Hangman 游戏!')
+    print('你要猜的单词长度是：{}'.format(len(secretWord)))
 
     while guesses_left > 0:
         print('-----------')
-        print(colored('你还有 {} 次机会'.format(guesses_left), 'yellow'))
-        print(colored('    可选字母有：{}'.format(''.join(getAvailableLetters(lettersGuessed))), 'yellow'))
-        singleLetter = checkSingleLetter(input(colored('    请输入一个字母：', 'green')))
+        print('你还有 {} 次机会'.format(guesses_left))
+        print('    可选字母有：{}'.format(''.join(getAvailableLetters(lettersGuessed))))
+        singleLetter = checkSingleLetter(input('    请输入一个字母：'))
         if singleLetter is None:
-            exit(1)
+            return
 
         lettersGuessed.append(singleLetter)
 
         guessed = getGuessedWord(secretWord, lettersGuessed)
         if isWordGuessed(secretWord, lettersGuessed):
-            print(colored('''猜对了: {} !!!'''.format(guessed), 'magenta'))
+            print('''猜对了: {} !!!'''.format(guessed))
             return
 
         if singleLetter not in getAvailableLetters(lettersGuessed[:-1]):
-            print(colored('傻不傻，你已经猜过这个字母了: {}'.format(guessed), 'cyan'))
+            print('傻不傻，你已经猜过这个字母了: {}'.format(guessed))
             lettersGuessed.pop()
             continue
 
         if singleLetter in secretWord:
-            print(colored('这个字母在: {}'.format(guessed), 'cyan'))
+            print('这个字母在: {}'.format(guessed))
             continue
         else:
-            print(colored('这个字母不在: {}'.format(guessed), 'cyan'))
+            print('这个字母不在: {}'.format(guessed))
+            guesses_left = guesses_left - 1
 
-        guesses_left = guesses_left - 1
-
-    print(colored('傻不傻，游戏结束，你没有猜对。', 'cyan'))
+    print('傻不傻，游戏结束，你没有猜对。')
 
 
 if __name__ == '__main__':
