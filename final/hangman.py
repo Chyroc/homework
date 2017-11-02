@@ -124,7 +124,6 @@ def hangman(secretWord):
 
     guesses_left = 8
     lettersGuessed = []
-    print(secretWord)
 
     print(colored('欢迎来到 Hangman 游戏!', 'green'))
     print(colored('你要猜的单词长度是：{}'.format(len(secretWord)), 'green'))
