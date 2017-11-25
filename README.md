@@ -21,3 +21,7 @@
 程序演示
 
 ![](./imgs/algorithms_huffman_2.jpeg)
+
+## gui
+
+![](http://recordit.co/6IHYYDPXjl.gif)
